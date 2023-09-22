@@ -8,7 +8,7 @@
 <link href="SICSS_02_screenscraping_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="SICSS_02_screenscraping_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="SICSS_02_screenscraping_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.333">
+  <meta name="generator" content="quarto-1.3.353">
 
   <meta name="author" content="Lecture: Jan Zilinsky">
   <title>Screenscraping</title>
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="SICSS_02_screenscraping_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link rel="stylesheet" href="SICSS_02_screenscraping_files/libs/revealjs/dist/theme/quarto.css">
   <link href="SICSS_02_screenscraping_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="SICSS_02_screenscraping_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="SICSS_02_screenscraping_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -439,8 +439,8 @@ Lecture: Jan Zilinsky
 <section id="screen-scraping-as-a-last-resort" class="slide level2">
 <h2>Screen-scraping as a last resort?</h2>
 <ul>
-<li>Modern web designs scraping difficult</li>
-<li>What you care about are often elements deeply nested in html structure</li>
+<li>Modern web designs make scraping difficult</li>
+<li>Elements you care about will often be nested deeply within html files</li>
 <li>Websites change all the time (or disappear)</li>
 </ul>
 </section></section>
@@ -451,8 +451,14 @@ Lecture: Jan Zilinsky
 </section>
 <section id="install-and-load-r-packages" class="slide level2">
 <h2>Install and load R packages</h2>
-<p>Ensure that you have <a href="https://www.tidyverse.org/">tidyverse</a> for data manipulation and <code>rvest</code> for reading websites into R:</p>
-<p>Afterwards, you can load all <code>tidyverse</code> core packages and <code>rvest</code>:</p>
+<ul>
+<li>Ensure the necessary packages are installed
+<ul>
+<li><a href="https://www.tidyverse.org/">tidyverse</a> for data manipulation</li>
+<li><code>rvest</code> for reading websites into R:</li>
+</ul></li>
+<li>Then load all <code>tidyverse</code> core packages and <code>rvest</code>:</li>
+</ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(rvest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -475,7 +481,7 @@ Lecture: Jan Zilinsky
 <img data-src="img/screen/wiki_source.png" style="width:90.0%" class="r-stretch quarto-figure-center"></section>
 <section id="store-the-full-page" class="slide level2">
 <h2>Store the full page</h2>
-<p>Passing the url as character (string) using the rvest function <code>read_html()</code>:</p>
+<p>Passing the url as a character (string) using the rvest function <code>read_html()</code>:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>svk2020_URL <span class="ot">&lt;-</span> <span class="st">"https://en.wikipedia.org/wiki/2020_Slovak_parliamentary_election"</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
@@ -493,7 +499,7 @@ Lecture: Jan Zilinsky
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>svk2020_html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{html_document}
-&lt;html class="client-nojs vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-sticky-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-enabled vector-feature-main-menu-pinned-disabled vector-feature-limited-width-enabled vector-feature-limited-width-content-enabled vector-feature-zebra-design-disabled" lang="en" dir="ltr"&gt;
+&lt;html class="client-nojs vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-sticky-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-clientpref-1 vector-feature-main-menu-pinned-disabled vector-feature-limited-width-clientpref-1 vector-feature-limited-width-content-enabled vector-feature-zebra-design-disabled vector-feature-custom-font-size-clientpref-disabled vector-feature-client-preferences-disabled" lang="en" dir="ltr"&gt;
 [1] &lt;head&gt;\n&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8 ...
 [2] &lt;body class="skin-vector skin-vector-search-vue mediawiki ltr sitedir-ltr ...</code></pre>
 </div>
@@ -541,10 +547,10 @@ Lecture: Jan Zilinsky
 <span id="cb6-3"><a href="#cb6-3"></a><span class="fu">head</span>(swk_wiki_section)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$node
-&lt;pointer: 0x7f866d81fa10&gt;
+&lt;pointer: 0x10cb04d40&gt;
 
 $doc
-&lt;pointer: 0x7f866df0c670&gt;</code></pre>
+&lt;pointer: 0x10ca3b250&gt;</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
@@ -698,9 +704,9 @@ $doc
 <span id="cb21-5"><a href="#cb21-5"></a>urls <span class="ot">&lt;-</span>  <span class="fu">html_attr</span>(nodes, <span class="st">"href"</span>)</span>
 <span id="cb21-6"><a href="#cb21-6"></a>urls[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "https://marginalrevolution.com/marginalrevolution/2023/07/more-on-the-merger-guidelines.html"
-[2] "https://marginalrevolution.com/marginalrevolution/2023/07/sri-lanka-travel-notes.html"       
-[3] "https://marginalrevolution.com/marginalrevolution/2023/07/suicide-rates.html"                </code></pre>
+<pre><code>[1] "https://marginalrevolution.com/marginalrevolution/2023/09/the-importance-of-mentorship.html"        
+[2] "https://marginalrevolution.com/marginalrevolution/2023/09/friday-assorted-links-436.html"           
+[3] "https://marginalrevolution.com/marginalrevolution/2023/09/patience-and-educational-achievement.html"</code></pre>
 </div>
 </div>
 </section>
@@ -712,21 +718,21 @@ $doc
 <span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">html_elements</span>(<span class="st">'h2.entry-title a'</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">html_attr</span>(<span class="st">'href'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "https://marginalrevolution.com/marginalrevolution/2023/07/more-on-the-merger-guidelines.html"                            
- [2] "https://marginalrevolution.com/marginalrevolution/2023/07/sri-lanka-travel-notes.html"                                   
- [3] "https://marginalrevolution.com/marginalrevolution/2023/07/suicide-rates.html"                                            
- [4] "https://marginalrevolution.com/marginalrevolution/2023/07/friday-assorted-links-428.html"                                
- [5] "https://marginalrevolution.com/marginalrevolution/2023/07/scrap-amc-kyc-laws.html"                                       
- [6] "https://marginalrevolution.com/marginalrevolution/2023/07/why-arent-barbie-tickets-more-expensive.html"                  
- [7] "https://marginalrevolution.com/marginalrevolution/2023/07/emergent-ventures-winners-27th-cohort.html"                    
- [8] "https://marginalrevolution.com/marginalrevolution/2023/07/the-rise-in-american-pain.html"                                
- [9] "https://marginalrevolution.com/marginalrevolution/2023/07/thursday-assorted-links-414.html"                              
-[10] "https://marginalrevolution.com/marginalrevolution/2023/07/the-merger-guidelines.html"                                    
-[11] "https://marginalrevolution.com/marginalrevolution/2023/07/my-excellent-conversation-with-the-excellent-noam-dworman.html"
-[12] "https://marginalrevolution.com/marginalrevolution/2023/07/sinead-oconnor.html"                                           
-[13] "https://marginalrevolution.com/marginalrevolution/2023/07/wednesday-assorted-links-411.html"                             
-[14] "https://marginalrevolution.com/marginalrevolution/2023/07/the-economics-of-export-bans.html"                             
-[15] "https://marginalrevolution.com/marginalrevolution/2023/07/the-amy-finkelstein-and-liran-einav-health-care-plan.html"     </code></pre>
+<pre><code> [1] "https://marginalrevolution.com/marginalrevolution/2023/09/the-importance-of-mentorship.html"                               
+ [2] "https://marginalrevolution.com/marginalrevolution/2023/09/friday-assorted-links-436.html"                                  
+ [3] "https://marginalrevolution.com/marginalrevolution/2023/09/patience-and-educational-achievement.html"                       
+ [4] "https://marginalrevolution.com/marginalrevolution/2023/09/thursday-assorted-love-links.html"                               
+ [5] "https://marginalrevolution.com/marginalrevolution/2023/09/the-rise-of-and-demand-for-identity-oriented-media-coverage.html"
+ [6] "https://marginalrevolution.com/marginalrevolution/2023/09/pharmaceutical-externalities.html"                               
+ [7] "https://marginalrevolution.com/marginalrevolution/2023/09/modern-principles.html"                                          
+ [8] "https://marginalrevolution.com/marginalrevolution/2023/09/my-excellent-conversation-with-lazarus-lake-ultra-marathons.html"
+ [9] "https://marginalrevolution.com/marginalrevolution/2023/09/wednesday-assorted-links-419.html"                               
+[10] "https://marginalrevolution.com/marginalrevolution/2023/09/robert-barro-and-rachel-mccleary-to-heritage.html"               
+[11] "https://marginalrevolution.com/marginalrevolution/2023/09/median-voter-theorem-again.html"                                 
+[12] "https://marginalrevolution.com/marginalrevolution/2023/09/the-british-ban-on-bully-dogs.html"                              
+[13] "https://marginalrevolution.com/marginalrevolution/2023/09/what-explains-educational-polarization-among-white-voters.html"  
+[14] "https://marginalrevolution.com/marginalrevolution/2023/09/tuesday-assorted-links-434.html"                                 
+[15] "https://marginalrevolution.com/marginalrevolution/2023/09/what-government-shutdown.html"                                   </code></pre>
 </div>
 </div>
 </section>
@@ -752,7 +758,7 @@ $doc
 <span id="cb27-3"><a href="#cb27-3"></a> <span class="fu">html_nodes</span>(<span class="st">'div.entry-content'</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb27-4"><a href="#cb27-4"></a> <span class="fu">html_text</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "\n    \nNo, reported suicide rates are not rising everywhere – they are falling in many countries, but rising in the US.\nAnd no, there is no big rise in teenage suicide rates in the US, the increase is concentrated in people over 19.\nThis makes global social media an unlikely cause. pic.twitter.com/K1COBitWMj\n— Dina D. Pomeranz (@DinaPomeranz) July 25, 2023\n\n\n  "</code></pre>
+<pre><code>[1] "\n    That is the topic of my latest Bloomberg column, here is one excerpt:\nEconomists have once again entered the fray, this time with a study that tries to determine how patience is correlated with better educational outcomes. The&nbsp;results&nbsp;are impressive, albeit unsettling. In Italy, differing degrees of patience account for two-thirds of the achievement variation across the country’s regions. In the US, differing degrees of patience account for one-third of the variation in educational outcomes across states, a smaller amount but still notable.\nBefore I go any further, you might be wondering which are the most patient states. They are (in alphabetical order) Maine, Montana, Vermont and Wyoming. The least patient state? California. In Italy, patience is highest in the northern region bordering Austria, which has a relatively Germanic culture and history. Patience is the lowest by far in Sicily. In both Italy and the US, patience is generally greater in the North than in the South.\nThese results do not necessarily mean that lower patience results in lower grades. It could be that doing well in school makes you more patient, because you learn that working hard has its own rewards, and that may lengthen your time horizon. Or there may be some underlying factor, say conscientiousness, that is key to both patience and academic achievement.\nStill, it is hard to avoid the overall impression that there is a tight connection between certain “bourgeois virtues” and academic achievement. If you are a parent, you might want to be rooting for your child to be more patient rather than less, no matter how complex all the interrelationships among the various personal and cultural attributes may turn out to be.\nThe researchers estimated patience by an ingenious method. There is already a widely accepted global preference survey that&nbsp;measures&nbsp;patience across nations. They then used Facebook data on interests, clicks and likes to see which interests were most popular in the more patient nations. Then they examined that data to see how popular those interests were in the various regions of those countries.\n\nHere is the underyling research by Eric A. Hanushek, Lavinia Kinne, Pietro Sancassani, and Ludger Woessmann.&nbsp; I do consider whether “patience” is exactly the right word for what is going on here.&nbsp; Hat tip also to The Wisdom of Garett Jones.\n\n  "</code></pre>
 </div>
 </div>
 </section>

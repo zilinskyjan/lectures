@@ -38,17 +38,19 @@ Verify whether site-owners allow scraping:
 
 ## Screen-scraping as a last resort?
 
-- Modern web designs scraping difficult
-- What you care about are often elements deeply nested in html structure
+- Modern web designs make scraping difficult
+- Elements you care about will often be nested deeply within html files
 - Websites change all the time (or disappear)
 
 # Screen-scraping with R
 
 ## Install and load R packages
 
-Ensure that you have [tidyverse](https://www.tidyverse.org/) for data manipulation and `rvest` for reading websites into R:
+- Ensure the necessary packages are installed 
+  - [tidyverse](https://www.tidyverse.org/) for data manipulation
+  - `rvest` for reading websites into R:
 
-Afterwards, you can load all `tidyverse` core packages and `rvest`:
+- Then load all `tidyverse` core packages and `rvest`:
 
 ```{r, size = 'scriptsize'}
 library(tidyverse)
@@ -69,7 +71,6 @@ We are going to scrape this table from Wikipedia:
 ```
 
 
-
 ## 
 
 ### Human-readable vs machine-readable
@@ -80,7 +81,7 @@ knitr::include_graphics('img/screen/wiki_source.png')
 
 ## Store the full page
 
-Passing the url as character (string) using the rvest function `read_html()`:
+Passing the url as a character (string) using the rvest function `read_html()`:
 
 ```{r}
 svk2020_URL <- "https://en.wikipedia.org/wiki/2020_Slovak_parliamentary_election"
